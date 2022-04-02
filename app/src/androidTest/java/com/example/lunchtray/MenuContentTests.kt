@@ -22,6 +22,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.example.lunchtray.constants.ItemType
+import com.example.lunchtray.model.MenuItem
 import com.example.lunchtray.ui.order.AccompanimentMenuFragment
 import com.example.lunchtray.ui.order.EntreeMenuFragment
 import com.example.lunchtray.ui.order.SideMenuFragment
@@ -44,37 +46,28 @@ class MenuContentTests : BaseTest() {
         // launch the entree menu fragment
         launchFragmentInContainer<EntreeMenuFragment>(themeResId = R.style.Theme_LunchTray)
 
+        val entreeMenuItems = fetchMenusByType(ItemType.ENTREE)
+
         // Check the cauliflower item
-        onView(withId(R.id.cauliflower))
-            .check(matches(withText(containsString("Cauliflower"))))
-        onView(withId(R.id.cauliflower_description))
-            .check(matches(withText(containsString("Whole cauliflower"))))
-        onView(withId(R.id.cauliflower_price))
-            .check(matches(withText(containsString("$7.00"))))
+        val cauliflower = entreeMenuItems["cauliflower"]!!
+        checkDisplayMenu(
+            cauliflower,
+            R.id.cauliflower,
+            R.id.cauliflower_description,
+            R.id.cauliflower_price
+        )
 
         // Check the chili item
-        onView(withId(R.id.chili))
-            .check(matches(withText(containsString("Three Bean Chili"))))
-        onView(withId(R.id.chili_description))
-            .check(matches(withText(containsString("Black beans"))))
-        onView(withId(R.id.chili_price))
-            .check(matches(withText(containsString("$4.00"))))
+        val chili = entreeMenuItems["chili"]!!
+        checkDisplayMenu(chili, R.id.chili, R.id.chili_description, R.id.chili_price)
 
         // Check the pasta item
-        onView(withId(R.id.pasta))
-            .check(matches(withText(containsString("Mushroom Pasta"))))
-        onView(withId(R.id.pasta_description))
-            .check(matches(withText(containsString("Penne pasta"))))
-        onView(withId(R.id.pasta_price))
-            .check(matches(withText(containsString("$5.50"))))
+        val pasta = entreeMenuItems["pasta"]!!
+        checkDisplayMenu(pasta, R.id.pasta, R.id.pasta_description, R.id.pasta_price)
 
         // Check the skillet item
-        onView(withId(R.id.skillet))
-            .check(matches(withText(containsString("Spicy Black Bean"))))
-        onView(withId(R.id.skillet_description))
-            .check(matches(withText(containsString("Seasonal vegetables"))))
-        onView(withId(R.id.skillet_price))
-            .check(matches(withText(containsString("$5.50"))))
+        val skillet = entreeMenuItems["skillet"]!!
+        checkDisplayMenu(skillet, R.id.skillet, R.id.skillet_description, R.id.skillet_price)
     }
 
     /**
@@ -89,37 +82,23 @@ class MenuContentTests : BaseTest() {
         // launch the side menu fragment
         launchFragmentInContainer<SideMenuFragment>(themeResId = R.style.Theme_LunchTray)
 
+        val sideMenuItems = fetchMenusByType(ItemType.SIDE_DISH)
+
         // Check the salad item
-        onView(withId(R.id.salad))
-            .check(matches(withText(containsString("Summer Salad"))))
-        onView(withId(R.id.salad_description))
-            .check(matches(withText(containsString("Heirloom tomatoes"))))
-        onView(withId(R.id.salad_price))
-            .check(matches(withText(containsString("$2.50"))))
+        val salad = sideMenuItems["salad"]!!
+        checkDisplayMenu(salad, R.id.salad, R.id.salad_description, R.id.salad_price)
 
         // Check the soup item
-        onView(withId(R.id.soup))
-            .check(matches(withText(containsString("Butternut Squash"))))
-        onView(withId(R.id.soup_description))
-            .check(matches(withText(containsString("Roasted butternut squash"))))
-        onView(withId(R.id.soup_price))
-            .check(matches(withText(containsString("$3.00"))))
+        val soup = sideMenuItems["soup"]!!
+        checkDisplayMenu(soup, R.id.soup, R.id.soup_description, R.id.soup_price)
 
         // Check the potato item
-        onView(withId(R.id.potatoes))
-            .check(matches(withText(containsString("Spicy Potatoes"))))
-        onView(withId(R.id.potato_description))
-            .check(matches(withText(containsString("Marble potatoes"))))
-        onView(withId(R.id.potato_price))
-            .check(matches(withText(containsString("$2.00"))))
+        val potatoes = sideMenuItems["potatoes"]!!
+        checkDisplayMenu(potatoes, R.id.potatoes, R.id.potato_description, R.id.potato_price)
 
         // Check the rice item
-        onView(withId(R.id.rice))
-            .check(matches(withText(containsString("Coconut Rice"))))
-        onView(withId(R.id.rice_description))
-            .check(matches(withText(containsString("Rice, coconut milk"))))
-        onView(withId(R.id.rice_price))
-            .check(matches(withText(containsString("$1.50"))))
+        val rice = sideMenuItems["rice"]!!
+        checkDisplayMenu(rice, R.id.rice, R.id.rice_description, R.id.rice_price)
     }
 
     /**
@@ -134,28 +113,24 @@ class MenuContentTests : BaseTest() {
         // launch the accompaniment menu fragment
         launchFragmentInContainer<AccompanimentMenuFragment>(themeResId = R.style.Theme_LunchTray)
 
+        val accompanimentMenuItems = fetchMenusByType(ItemType.ACCOMPANIMENT)
+
         // Check the bread item
-        onView(withId(R.id.bread))
-            .check(matches(withText(containsString("Lunch Roll"))))
-        onView(withId(R.id.bread_description))
-            .check(matches(withText(containsString("Fresh baked"))))
-        onView(withId(R.id.bread_price))
-            .check(matches(withText(containsString("$0.50"))))
+        val bread = accompanimentMenuItems["bread"]!!
+        checkDisplayMenu(bread, R.id.bread, R.id.bread_description, R.id.bread_price)
 
         // Check the berries item
-        onView(withId(R.id.berries))
-            .check(matches(withText(containsString("Mixed Berries"))))
-        onView(withId(R.id.berries_description))
-            .check(matches(withText(containsString("Strawberries"))))
-        onView(withId(R.id.berries_price))
-            .check(matches(withText(containsString("$1.00"))))
+        val berries = accompanimentMenuItems["berries"]!!
+        checkDisplayMenu(berries, R.id.berries, R.id.berries_description, R.id.berries_price)
 
         // Check the pickle item
-        onView(withId(R.id.pickles))
-            .check(matches(withText(containsString("Pickled Veggies"))))
-        onView(withId(R.id.pickles_description))
-            .check(matches(withText(containsString("Pickled cucumbers"))))
-        onView(withId(R.id.pickles_price))
-            .check(matches(withText(containsString("$0.50"))))
+        val pickles = accompanimentMenuItems["pickles"]!!
+        checkDisplayMenu(pickles, R.id.pickles, R.id.pickles_description, R.id.pickles_price)
+    }
+
+    private fun checkDisplayMenu(menu: MenuItem, titleId: Int, descriptionId: Int, priceId: Int) {
+        onView(withId(titleId)).check(matches(withText(containsString(menu.name))))
+        onView(withId(descriptionId)).check(matches(withText(containsString(menu.description))))
+        onView(withId(priceId)).check(matches(withText(containsString(menu.getFormattedPrice()))))
     }
 }

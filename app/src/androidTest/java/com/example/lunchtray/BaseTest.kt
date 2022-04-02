@@ -15,10 +15,15 @@
  */
 package com.example.lunchtray
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.testing.FragmentScenario
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.example.lunchtray.data.DataSource
+import com.example.lunchtray.model.MenuItem
 
 open class BaseTest {
 
@@ -40,4 +45,7 @@ open class BaseTest {
         // Move to next fragment
         onView(withId(R.id.next_button)).perform(click())
     }
+
+    fun fetchMenusByType(menuType: Int): Map<String, MenuItem> =
+        DataSource.menuItems.filter { it.value.type == menuType }
 }
