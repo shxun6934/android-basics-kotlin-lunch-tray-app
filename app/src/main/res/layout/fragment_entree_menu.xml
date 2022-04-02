@@ -14,18 +14,21 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.order.EntreeMenuFragment">
-    
+
     <data>
+
         <variable
             name="viewModel"
             type="com.example.lunchtray.model.OrderViewModel" />
 
         <!-- TODO: Add the data binding variable for the EntreeMenuFragment -->
+        <variable
+            name="entreeMenuFragment"
+            type="com.example.lunchtray.ui.order.EntreeMenuFragment" />
     </data>
 
 
@@ -53,8 +56,10 @@
                     android:id="@+id/cauliflower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:checked='@{viewModel.entree.equals(viewModel.menuItems["cauliflower"])}'
+                    android:onClick='@{() -> viewModel.setEntree("cauliflower")}'
                     android:text='@{viewModel.menuItems["cauliflower"].name}'
+                    android:textAppearance="?attr/textAppearanceBody1"
                     tools:text="Entree 1" />
 
                 <TextView
@@ -68,7 +73,7 @@
                     style="@style/Widget.MenuItem.TextView.Info"
                     android:paddingTop="@dimen/base_margin"
                     android:text='@{viewModel.menuItems["cauliflower"].getFormattedPrice()}'
-                    tools:text="$0.00" />
+                    tools:text="￥0" />
 
                 <View
                     style="@style/Widget.LunchTray.Divider"
@@ -83,8 +88,10 @@
                     android:id="@+id/chili"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:checked='@{viewModel.entree.equals(viewModel.menuItems["chili"])}'
+                    android:onClick='@{() -> viewModel.setEntree("chili")}'
                     android:text='@{viewModel.menuItems["chili"].name}'
+                    android:textAppearance="?attr/textAppearanceBody1"
                     tools:text="Entree 2" />
 
                 <TextView
@@ -98,7 +105,7 @@
                     style="@style/Widget.MenuItem.TextView.Info"
                     android:paddingTop="@dimen/base_margin"
                     android:text='@{viewModel.menuItems["chili"].getFormattedPrice()}'
-                    tools:text="$0.00" />
+                    tools:text="￥0" />
 
                 <View
                     style="@style/Widget.LunchTray.Divider"
@@ -113,8 +120,10 @@
                     android:id="@+id/pasta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:checked='@{viewModel.entree.equals(viewModel.menuItems["pasta"])}'
+                    android:onClick='@{() -> viewModel.setEntree("pasta")}'
                     android:text='@{viewModel.menuItems["pasta"].name}'
+                    android:textAppearance="?attr/textAppearanceBody1"
                     tools:text="Entree 3" />
 
                 <TextView
@@ -128,7 +137,7 @@
                     style="@style/Widget.MenuItem.TextView.Info"
                     android:paddingTop="@dimen/base_margin"
                     android:text='@{viewModel.menuItems["pasta"].getFormattedPrice()}'
-                    tools:text="$0.00" />
+                    tools:text="￥0" />
 
                 <View
                     style="@style/Widget.LunchTray.Divider"
@@ -143,8 +152,10 @@
                     android:id="@+id/skillet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:checked='@{viewModel.entree.equals(viewModel.menuItems["skillet"])}'
+                    android:onClick='@{() -> viewModel.setEntree("skillet")}'
                     android:text='@{viewModel.menuItems["skillet"].name}'
+                    android:textAppearance="?attr/textAppearanceBody1"
                     tools:text="Entree 4" />
 
                 <TextView
@@ -158,7 +169,7 @@
                     style="@style/Widget.MenuItem.TextView.Info"
                     android:paddingTop="@dimen/base_margin"
                     android:text='@{viewModel.menuItems["skillet"].getFormattedPrice()}'
-                    tools:text="$0.00" />
+                    tools:text="￥0" />
 
             </RadioGroup>
 
@@ -176,14 +187,16 @@
             <TextView
                 android:id="@+id/subtotal"
                 style="@style/Widget.LunchTray.TextView.Subtotal"
+                android:text="@{@string/subtotal(viewModel.subtotal)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
-                tools:text="Subtotal $5.00"/>
+                tools:text="Subtotal ￥5" />
 
             <!-- TODO: cancel the order when clicked -->
             <Button
                 android:id="@+id/cancel_button"
                 style="@style/Widget.Order.Button.Cancel"
+                android:onClick="@{() -> entreeMenuFragment.cancelOrder()}"
                 app:layout_constraintEnd_toStartOf="@id/next_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/next_button" />
@@ -192,6 +205,7 @@
             <Button
                 android:id="@+id/next_button"
                 style="@style/Widget.Order.Button.Next"
+                android:onClick="@{() -> entreeMenuFragment.goToNextScreen()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cancel_button"
